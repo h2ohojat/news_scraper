@@ -7,7 +7,7 @@ from models.news import News
 
 class NewsProcessor:
     """
-    Process and prepare news items for publishing
+    Process and prepare news items
     """
 
     def __init__(self, max_summary_length: int = 300):
@@ -17,8 +17,13 @@ class NewsProcessor:
         processed = []
 
         for news in news_list:
+            # ✅ فقط اگر Source تصویر نداده، تلاش کن از summary بگیری
+            if not news.image_url:
+                news.image_url = self._extract_image_from_summary(news.summary)
+
+            # ✅ خلاصه را تمیز کن (بدون دست زدن به image)
             news.summary = self._clean_summary(news.summary)
-            news.image_url = self._extract_image(news.summary)
+
             processed.append(news)
 
         return processed
@@ -27,17 +32,18 @@ class NewsProcessor:
         if not summary:
             return None
 
-        # حذف HTML
         text = BeautifulSoup(summary, "html.parser").get_text()
         text = re.sub(r"\s+", " ", text).strip()
 
-        # کوتاه‌سازی
         if len(text) > self.max_summary_length:
             text = text[: self.max_summary_length] + "..."
 
         return text
 
-    def _extract_image(self, summary: str | None) -> str | None:
+    def _extract_image_from_summary(self, summary: str | None) -> str | None:
+        """
+        Fallback image extraction from HTML summary (if exists)
+        """
         if not summary:
             return None
 
