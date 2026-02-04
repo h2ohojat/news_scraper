@@ -1,18 +1,19 @@
 from collector.news_collector import NewsCollector
-from sources.example_source import ExampleNewsSource
+from sources.irna_source import IrnaNewsSource
 
 
 def main():
     print("🚀 Eitaa News App started")
+    print("📰 Collecting news...")
 
-    sources = [
-        ExampleNewsSource()
-    ]
-
+    sources = [IrnaNewsSource()]
     collector = NewsCollector(sources)
-    news = collector.collect()
 
+    news = collector.collect()
     print(f"✅ Collected {len(news)} news items")
+
+    for item in news:
+        print("-", item.title)
 
 
 if __name__ == "__main__":
