@@ -1,18 +1,18 @@
-"""
-Entry point of Eitaa News Scraper project
-"""
-
 from collector.news_collector import NewsCollector
+from sources.example_source import ExampleNewsSource
 
 
 def main():
     print("🚀 Eitaa News App started")
 
-    collector = NewsCollector()
+    sources = [
+        ExampleNewsSource()
+    ]
 
-    news_list = collector.collect()
+    collector = NewsCollector(sources)
+    news = collector.collect()
 
-    print(f"✅ Collected {len(news_list)} news items")
+    print(f"✅ Collected {len(news)} news items")
 
 
 if __name__ == "__main__":
