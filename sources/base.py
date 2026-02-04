@@ -1,19 +1,19 @@
 from abc import ABC, abstractmethod
-from typing import List, Dict
+from typing import List
+from models.news import News
 
 
 class NewsSource(ABC):
     """
     Base abstract class for all news sources
-    Each news source must implement the fetch method
     """
 
     @abstractmethod
-    def fetch(self) -> List[Dict]:
+    def fetch(self) -> List[News]:
         """
         Fetch news from the source
 
         Returns:
-            List[Dict]: A list of news items
+            List[News]: A list of news items
         """
         pass

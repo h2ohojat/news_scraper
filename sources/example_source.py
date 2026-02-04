@@ -1,4 +1,6 @@
+from datetime import datetime
 from sources.base import NewsSource
+from models.news import News
 
 
 class ExampleNewsSource(NewsSource):
@@ -8,10 +10,11 @@ class ExampleNewsSource(NewsSource):
 
     def fetch(self):
         return [
-            {
-                "title": "Example News Title",
-                "url": "https://example.com/news/1",
-                "source": "Example",
-                "published_at": "2026-02-04"
-            }
+            News(
+                title="Example News Title",
+                url="https://example.com/news/1",
+                source="Example",
+                published_at=datetime.now(),
+                summary="This is a sample news item for testing."
+            )
         ]
