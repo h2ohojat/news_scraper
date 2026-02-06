@@ -11,3 +11,5 @@ class News:
     published_at: Optional[datetime] = None
     summary: Optional[str] = None
     image_url: Optional[str] = None
+
+    
